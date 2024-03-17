@@ -1,0 +1,72 @@
+import tkinter as tk
+from tkinter import ttk
+import math
+
+def calculate_rme(mana_pool, output, input_val, coefficient, variations_in_flow, circuit_age, sum_magical_experience):
+    efficiency_ratio = (output - input_val) / (mana_pool * coefficient * variations_in_flow)
+    age_factor = 1 - math.exp(-circuit_age / sum_magical_experience)
+    rme_percentage = efficiency_ratio * age_factor * 100
+    return rme_percentage
+
+def calculate_button_clicked():
+    try:
+        mana_pool = float(mana_pool_entry.get())
+        output = float(output_entry.get())
+        input_val = float(input_entry.get())
+        coefficient = float(coefficient_entry.get())
+        variations_in_flow = float(variations_entry.get())
+        circuit_age = float(age_entry.get())
+        sum_magical_experience = float(experience_entry.get())
+
+        rme = calculate_rme(mana_pool, output, input_val, coefficient, variations_in_flow, circuit_age, sum_magical_experience)
+        result_label.config(text="Recommended Mana Efficiency (RME): {:.2f}%".format(rme))
+    except ValueError:
+        result_label.config(text="Error: Please enter valid numeric values.")
+
+# Create main window
+root = tk.Tk()
+root.title("RME Calculator")
+
+# Create input fields
+mana_pool_label = ttk.Label(root, text="Mana Pool:")
+mana_pool_label.grid(row=0, column=0, padx=5, pady=5)
+mana_pool_entry = ttk.Entry(root)
+mana_pool_entry.grid(row=0, column=1, padx=5, pady=5)
+
+output_label = ttk.Label(root, text="Output:")
+output_label.grid(row=1, column=0, padx=5, pady=5)
+output_entry = ttk.Entry(root)
+output_entry.grid(row=1, column=1, padx=5, pady=5)
+
+input_label = ttk.Label(root, text="Input:")
+input_label.grid(row=2, column=0, padx=5, pady=5)
+input_entry = ttk.Entry(root)
+input_entry.grid(row=2, column=1, padx=5, pady=5)
+
+coefficient_label = ttk.Label(root, text="Coefficient:")
+coefficient_label.grid(row=3, column=0, padx=5, pady=5)
+coefficient_entry = ttk.Entry(root)
+coefficient_entry.grid(row=3, column=1, padx=5, pady=5)
+
+variations_label = ttk.Label(root, text="Variations in Flow:")
+variations_label.grid(row=4, column=0, padx=5, pady=5)
+variations_entry = ttk.Entry(root)
+variations_entry.grid(row=4, column=1, padx=5, pady=5)
+
+age_label = ttk.Label(root, text="Circuit Age:")
+age_label.grid(row=5, column=0, padx=5, pady=5)
+age_entry = ttk.Entry(root)
+age_entry.grid(row=5, column=1, padx=5, pady=5)
+
+experience_label = ttk.Label(root, text="Sum of Magical Experience:")
+experience_label.grid(row=6, column=0, padx=5, pady=5)
+experience_entry = ttk.Entry(root)
+experience_entry.grid(row=6, column=1, padx=5, pady=5)
+
+calculate_button = ttk.Button(root, text="Calculate", command=calculate_button_clicked)
+calculate_button.grid(row=7, column=0, columnspan=2, padx=5, pady=10)
+
+result_label = ttk.Label(root, text="")
+result_label.grid(row=8, column=0, columnspan=2, padx=5, pady=5)
+
+root.mainloop()
